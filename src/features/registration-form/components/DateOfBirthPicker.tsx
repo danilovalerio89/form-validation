@@ -1,10 +1,23 @@
 import { DatePicker, Field, Portal } from "@chakra-ui/react";
 import { Controller, type UseFormReturn } from "react-hook-form";
 import { LuCalendar } from "react-icons/lu";
+import { parseDate, type DateValue } from "@internationalized/date";
 import type { RegistrationFormData } from "@/features/registration-form/schemas/registrationSchema";
 
 interface DateOfBirthPickerProps {
   form: UseFormReturn<RegistrationFormData>;
+}
+
+function toDateValue(date: Date | null | undefined): DateValue[] {
+  if (!date) return [];
+  const isoDate = date.toISOString().split("T")[0];
+  return [parseDate(isoDate)];
+}
+
+function toNativeDate(values: DateValue[]): Date | null {
+  if (!values[0]) return null;
+  const { year, month, day } = values[0];
+  return new Date(year, month - 1, day);
 }
 
 export function DateOfBirthPicker({ form }: DateOfBirthPickerProps) {
@@ -19,8 +32,8 @@ export function DateOfBirthPicker({ form }: DateOfBirthPickerProps) {
         <Field.Root invalid={!!errors.dateOfBirth}>
           <DatePicker.Root
             maxWidth="20rem"
-            value={field.value ? [field.value] : []}
-            onValueChange={(e) => field.onChange(e.value[0] ?? null)}
+            value={toDateValue(field.value)}
+            onValueChange={(e) => field.onChange(toNativeDate(e.value))}
           >
             <DatePicker.Label>Date of birth</DatePicker.Label>
             <DatePicker.Control>
