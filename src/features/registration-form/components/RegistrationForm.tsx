@@ -1,11 +1,4 @@
-import {
-  Box,
-  Button,
-  Center,
-  Fieldset,
-  Heading,
-  Stack,
-} from "@chakra-ui/react";
+import { Box, Button, Center, Fieldset, Stack } from "@chakra-ui/react";
 import { useRegistrationForm } from "@/features/registration-form/hooks/useRegistrationForm";
 import { PersonalInfoFields } from "@/features/registration-form/components/PersonalInfoFields";
 import { EmailFields } from "@/features/registration-form/components/EmailFields";
@@ -18,14 +11,10 @@ export function RegistrationForm() {
   const { formState } = form;
 
   return (
-    <Box>
-      <Center>
-        <Heading>Form Validation</Heading>
-      </Center>
-
+    <Box w="xl" margin={"10"}>
       <Center>
         <form onSubmit={onSubmit}>
-          <Fieldset.Root size="lg" maxW="md">
+          <Fieldset.Root size="lg" w="xl">
             <Stack>
               <Fieldset.Legend>Form</Fieldset.Legend>
               <Fieldset.HelperText>Formulário para teste</Fieldset.HelperText>

@@ -9,19 +9,20 @@ import { registrationService } from "@/features/registration-form/services/regis
 export function useRegistrationForm() {
   const form = useForm<RegistrationFormData>({
     resolver: zodResolver(registrationSchema),
-    mode: "onChange",
+    mode: "onBlur",
     defaultValues: {
       name: "",
       lastName: "",
-      email: "",
-      confirmEmail: "",
-      country: "",
-      acceptTerms: false,
+      // email: "",
+      // confirmEmail: "",
+      // country: "",
+      // acceptTerms: false,
     },
   });
 
   const onSubmit = form.handleSubmit(async (data) => {
     await registrationService.submit(data);
+    console.log(data);
     form.reset();
   });
 
