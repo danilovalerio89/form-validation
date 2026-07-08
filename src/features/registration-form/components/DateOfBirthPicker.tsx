@@ -20,9 +20,21 @@ function toNativeDate(values: DateValue[]): Date | null {
   return new Date(year, month - 1, day);
 }
 
+function maxDate() {
+  const today = new Date();
+
+  const year = today.getFullYear();
+  const month = String(today.getMonth() + 1).padStart(2, "0");
+  const day = String(today.getDate()).padStart(2, "0");
+  const formattedDate = `${year}-${month}-${day}`;
+  return formattedDate;
+}
+
 export function DateOfBirthPicker({ form }: DateOfBirthPickerProps) {
   const { control, formState } = form;
   const { errors } = formState;
+
+  const date = maxDate();
 
   return (
     <Controller
@@ -31,6 +43,7 @@ export function DateOfBirthPicker({ form }: DateOfBirthPickerProps) {
       render={({ field }) => (
         <Field.Root invalid={!!errors.dateOfBirth}>
           <DatePicker.Root
+            max={parseDate(date)}
             maxWidth="20rem"
             value={toDateValue(field.value)}
             onValueChange={(e) => field.onChange(toNativeDate(e.value))}

@@ -2,8 +2,11 @@ import { z } from "zod";
 
 export const registrationSchema = z
   .object({
-    name: z.string().min(5, "Nome é obrigatório"),
-    lastName: z.string().min(5, "Sobrenome é obrigatório"),
+    name: z.string().nonempty("Nome obrigatório").min(3, "Minimo de 3 letras"),
+    lastName: z
+      .string()
+      .nonempty("Sobrenome obrigatório")
+      .min(5, "Minimo de 3 letras"),
     email: z.email("E-mail inválido"),
     confirmEmail: z.email("E-mail inválido"),
     country: z.string().min(1, "Selecione um país"),
